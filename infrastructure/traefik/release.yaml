@@ -1,0 +1,67 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+      version: 20.8.0
+  interval: 1h0m0s
+  releaseName: traefik
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+    service:
+      enabled: false
+    persistence:
+      enabled: true
+      storageClass: longhorn
+    env:
+      - name: CF_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: traefik-secrets
+            key: apiKey
+      - name: CF_API_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: traefik-secrets
+            key: email
+      - name: TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: traefik-secrets
+            key: email
+      - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_MAIN
+        valueFrom:
+          secretKeyRef:
+            name: traefik-secrets
+            key: wildcardDomain
+      - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_SANS
+        valueFrom:
+          secretKeyRef:
+            name: traefik-secrets
+            key: wildcardDomain
+    additionalArguments:
+      - --entrypoints.websecure.http.tls.certresolver=letsencrypt
+      - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=90
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "50Mi"
+      limits:
+        cpu: "300m"
+        memory: "150Mi"
