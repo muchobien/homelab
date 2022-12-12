@@ -1,0 +1,14 @@
+namespace: ddns
+
+configMapGenerator:
+  - name: ddns-scripts
+    namespace: ddns
+    options:
+      disableNameSuffixHash: true
+    files:
+      - ddns.sh
+
+resources:
+  - namespace.yaml
+  - ddns.secret.yaml
+  - job.yaml

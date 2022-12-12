@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ddns
+spec:
+  schedule: "@hourly"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              configMap:
+                name: ddns-scripts
+                defaultMode: 0755
+          containers:
+            - name: ddns
+              image: bash:5.2.12
+              imagePullPolicy: IfNotPresent
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+                  readOnly: true
+              env:
+                - name: ZONE
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secrets
+                      key: zone
+                - name: DNS_RECORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secrets
+                      key: dns_record
+                - name: AUTH_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secrets
+                      key: token
+              command: ["/scripts/ddns.sh"]
