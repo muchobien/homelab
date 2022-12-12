@@ -58,15 +58,23 @@ spec:
             - 1.0.0.1:53
     ports:
       websecure:
+        port: 8443
+        expose: true
+        exposedPort: 443
+        protocol: TCP
         tls:
+          enabled: true
           certResolver: letsencrypt
           domains:
             - main: $(WILDCARD_DOMAIN)
               sans:
                 - $(WILDCARD_DOMAIN)
+
     ingressRoute:
       dashboard:
-        entryPoints: ["websecure"]
+        enabled: true
+        entryPoints:
+          - "websecure"
         matchRule: "Host(`traefik.krosf.com`)"
 
     resources:
