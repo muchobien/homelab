@@ -18,8 +18,6 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
-  postRenderers:
-    -
   values:
     providers:
       kubernetesCRD:
