@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/version: v0.107.19
+    app.kubernetes.io/name: adguard-home
+    app.kubernetes.io/instance: adguard-home
+  name: adguardhome
+  namespace: adguardhome
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`adguard.krosf.com`)
+      services:
+        - kind: Service
+          name: adguard-home-http
+          port: 80

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: adguard-home
+    app.kubernetes.io/name: adguard-home
+    app.kubernetes.io/version: v0.107.19
+  name: adguard-home
+  namespace: adguardhome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: adguard-home
+      app.kubernetes.io/name: adguard-home
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: adguard-home
+        app.kubernetes.io/name: adguard-home
+    spec:
+      containers:
+        - image: adguard/adguardhome:v0.107.19
+          imagePullPolicy: IfNotPresent
+          name: adguard-home
+          ports:
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 53
+              name: dns-udp
+              protocol: UDP
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+            limits:
+              cpu: "300m"
+              memory: "150Mi"
+          volumeMounts:
+            - mountPath: /opt/adguardhome/work
+              name: data-vol
+              subPath: work
+            - mountPath: /opt/adguardhome/conf
+              name: data-vol
+              subPath: conf
+      initContainers:
+        - command:
+            - /bin/sh
+            - -c
+            - |
+              if ls /opt/adguardhome/conf/AdGuardHome.yaml; then
+                echo "Existing file will NOT be altered: /opt/adguardhome/conf/AdGuardHome.yaml"
+              else
+                cp -v /var/adguardhome-bootstrap/AdGuardHome.yaml /opt/adguardhome/conf/AdGuardHome.yaml
+              fi
+          image: busybox:1.35.0
+          imagePullPolicy: IfNotPresent
+          name: configurator
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          volumeMounts:
+            - mountPath: /var/adguardhome-bootstrap
+              name: bootstrap-config-vol
+            - mountPath: /opt/adguardhome/conf
+              name: data-vol
+              subPath: conf
+      serviceAccountName: adguard-home
+      volumes:
+        - name: bootstrap-config-vol
+          secret:
+            secretName: adguard-home
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: adguard-home

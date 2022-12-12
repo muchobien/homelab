@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/address-pool: tailscale-pool
+    metallb.universe.tf/allow-shared-ip: tailscale
+  name: adguard-home-dns
+  namespace: adguardhome
+spec:
+  ports:
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: dns-tcp
+    - name: dns-udp
+      port: 53
+      protocol: UDP
+      targetPort: dns-udp
+  selector:
+    app.kubernetes.io/instance: adguard-home
+    app.kubernetes.io/name: adguard-home
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/address-pool: local-pool
+    metallb.universe.tf/allow-shared-ip: local
+  name: adguard-home-dns-local
+  namespace: adguardhome
+spec:
+  ports:
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: dns-tcp
+    - name: dns-udp
+      port: 53
+      protocol: UDP
+      targetPort: dns-udp
+  selector:
+    app.kubernetes.io/instance: adguard-home
+    app.kubernetes.io/name: adguard-home
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-home-http
+  namespace: adguardhome
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/instance: adguard-home
+    app.kubernetes.io/name: adguard-home
+  type: ClusterIP

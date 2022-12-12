@@ -5,3 +5,4 @@ resources:
   - metallb
   - longhorn
   - traefik
+  - adguardhome
