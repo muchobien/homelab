@@ -18,6 +18,8 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
+  postRenderers:
+    -
   values:
     providers:
       kubernetesCRD:
@@ -56,11 +58,17 @@ spec:
             - 1.0.0.1:53
     ports:
       websecure:
-        certResolver: letsencrypt
-        domains:
-          - main: $(WILDCARD_DOMAIN)
-            sans:
-              - $(WILDCARD_DOMAIN)
+        tls:
+          certResolver: letsencrypt
+          domains:
+            - main: $(WILDCARD_DOMAIN)
+              sans:
+                - $(WILDCARD_DOMAIN)
+    ingressRoute:
+      dashboard:
+        entryPoints: ["websecure"]
+        matchRule: "Host(`traefik.krosf.com`)"
+
     resources:
       requests:
         cpu: "100m"
