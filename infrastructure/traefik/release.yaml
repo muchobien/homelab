@@ -39,17 +39,7 @@ spec:
           secretKeyRef:
             name: traefik-secrets
             key: email
-      - name: TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL
-        valueFrom:
-          secretKeyRef:
-            name: traefik-secrets
-            key: email
-      - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_MAIN
-        valueFrom:
-          secretKeyRef:
-            name: traefik-secrets
-            key: wildcardDomain
-      - name: TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_SANS
+      - name: WILDCARD_DOMAIN
         valueFrom:
           secretKeyRef:
             name: traefik-secrets
@@ -57,9 +47,12 @@ spec:
     additionalArguments:
       - --entrypoints.websecure.http.tls.certresolver=letsencrypt
       - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+      - --certificatesresolvers.letsencrypt.acme.email=$(CF_API_EMAIL)
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=90
+      - --entrypoints.websecure.http.tls.domains[0].main=$(WILDCARD_DOMAIN)
+      - --entrypoints.websecure.http.tls.domains[0].sans=$(WILDCARD_DOMAIN)
     resources:
       requests:
         cpu: "100m"
