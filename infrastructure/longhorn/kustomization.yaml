@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
   - storage.storageclass.yaml
+  - ingress.yaml
 
 patches:
   - target:
