@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: webhook-receiver
+  namespace: flux-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`flux.krosf.com`)
+      services:
+        - kind: Service
+          name: webhook-receiver
+          port: 80
