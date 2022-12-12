@@ -9,10 +9,10 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: flux-system
       version: 20.8.0
   interval: 1h0m0s
   releaseName: traefik
+  targetNamespace: traefik
   install:
     crds: Create
   upgrade:
