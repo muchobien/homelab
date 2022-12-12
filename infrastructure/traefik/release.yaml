@@ -44,15 +44,23 @@ spec:
           secretKeyRef:
             name: traefik-secrets
             key: wildcardDomain
-    additionalArguments:
-      - --entrypoints.websecure.http.tls.certresolver=letsencrypt
-      - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
-      - --certificatesresolvers.letsencrypt.acme.email=$(CF_API_EMAIL)
-      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
-      - --certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
-      - --certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=90
-      - --entrypoints.websecure.http.tls.domains[0].main=$(WILDCARD_DOMAIN)
-      - --entrypoints.websecure.http.tls.domains[0].sans=$(WILDCARD_DOMAIN)
+    certResolvers:
+      letsencrypt:
+        email: $(CF_API_EMAIL)
+        storage: /data/acme.json
+        dnsChallenge:
+          delayBeforeCheck: 90
+          provider: cloudflare
+          resolvers:
+            - 1.1.1.1:53
+            - 1.0.0.1:53
+    ports:
+      websecure:
+        certResolver: letsencrypt
+        domains:
+          - main: $(WILDCARD_DOMAIN)
+            sans:
+              - $(WILDCARD_DOMAIN)
     resources:
       requests:
         cpu: "100m"
