@@ -29,6 +29,14 @@ spec:
           requests:
             cpu: 200m
             memory: 200Mi
+        storageSpec:
+          volumeClaimTemplate:
+          spec:
+            storageClassName: longhorn
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 30Gi
         podMonitorNamespaceSelector: {}
         podMonitorSelector:
           matchLabels:
