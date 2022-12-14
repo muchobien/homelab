@@ -15,3 +15,21 @@ spec:
         - kind: Service
           name: kube-prometheus-stack-grafana
           port: http-web
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: kube-prometheus-stack
+  name: prometheus-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`prometheus.krosf.com`)
+      services:
+        - kind: Service
+          name: kube-prometheus-stack-prometheus
+          port: http-web
