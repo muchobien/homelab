@@ -117,6 +117,8 @@ spec:
           jobLabel: traefik
           interval: 30s
           honorLabels: true
+          additionalLabels:
+            release: kube-prometheus
         prometheusRule:
           rules:
             - alert: TraefikDown
