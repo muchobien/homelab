@@ -12,6 +12,8 @@ spec:
   routes:
     - kind: Rule
       match: Host(`auth.krosf.com`)
+      middlewares:
+        - name: traefik-forward-auth
       services:
         - kind: Service
           name: traefik-forward-auth
