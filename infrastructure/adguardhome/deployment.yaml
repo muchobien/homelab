@@ -35,11 +35,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: "100m"
-              memory: "50Mi"
-            limits:
-              cpu: "300m"
+              cpu: "10m"
               memory: "150Mi"
+            limits:
+              cpu: "50m"
+              memory: "250Mi"
           volumeMounts:
             - mountPath: /opt/adguardhome/work
               name: data-vol
