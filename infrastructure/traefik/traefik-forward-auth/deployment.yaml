@@ -35,8 +35,10 @@ spec:
               value: krosf.com
             - name: ENABLE_IN_CLUSTER_STORAGE
               value: "true"
-            - name: INSECURE_COOKIE
-              value: "true"
+            - name: LOG_LEVEL
+              value: debug
+            - name: LOG_FORMAT
+              value: json
             - name: SCOPE
               value: openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
             - name: CLUSTER_STORE_NAMESPACE
