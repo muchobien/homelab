@@ -11,6 +11,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`grafana.krosf.com`)
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: traefik
       services:
         - kind: Service
           name: kube-prometheus-stack-grafana
@@ -29,6 +32,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`prometheus.krosf.com`)
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: traefik
       services:
         - kind: Service
           name: kube-prometheus-stack-prometheus

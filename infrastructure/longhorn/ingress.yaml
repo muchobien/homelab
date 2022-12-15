@@ -12,6 +12,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`longhorn.krosf.com`)
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: traefik
       services:
         - kind: Service
           name: longhorn-frontend
