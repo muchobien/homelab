@@ -118,7 +118,7 @@ spec:
           interval: 30s
           honorLabels: true
           additionalLabels:
-            release: kube-prometheus
+            release: kube-prometheus-stack
         prometheusRule:
           rules:
             - alert: TraefikDown
