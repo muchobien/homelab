@@ -37,7 +37,7 @@ spec:
             - name: INSECURE_COOKIE
               value: "true"
             - name: SCOPE
-              value: openid,https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile
+              value: openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
             - name: CLUSTER_STORE_NAMESPACE
               value: traefik
             - name: PROVIDER_URI
