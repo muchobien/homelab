@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik-forward-auth
+    app.kubernetes.io/name: traefik-forward-auth
+    app.kubernetes.io/version: v3.1.0
+  name: traefik-forward-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik-forward-auth
+      app.kubernetes.io/name: traefik-forward-auth
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: traefik-forward-auth
+        app.kubernetes.io/name: traefik-forward-auth
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - image: mesosphere/traefik-forward-auth:3.1.0
+          imagePullPolicy: IfNotPresent
+          name: traefik-forward-auth
+          ports:
+            - containerPort: 4181
+              name: http
+              protocol: TCP
+          env:
+            - name: AUTH_HOST
+              value: auth.krosf.com
+            - name: DOMAIN
+              value: krosf.com
+            - name: ENABLE_IN_CLUSTER_STORAGE
+              value: "true"
+            - name: INSECURE_COOKIE
+              value: "true"
+            - name: CLUSTER_STORE_NAMESPACE
+              value: traefik
+            - name: PROVIDER_URI
+              value: https://accounts.google.com
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: client_id
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: client_secret
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: secret
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "100Mi"

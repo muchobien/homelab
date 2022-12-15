@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/version: v3.1.0
+    app.kubernetes.io/name: traefik-forward-auth
+    app.kubernetes.io/instance: traefik-forward-auth
+  name: traefik-forward-auth
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`auth.krosf.com`)
+      services:
+        - kind: Service
+          name: traefik-forward-auth
+          port: auth-http
