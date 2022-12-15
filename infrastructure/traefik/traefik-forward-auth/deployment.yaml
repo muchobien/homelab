@@ -31,7 +31,7 @@ spec:
           env:
             - name: AUTH_HOST
               value: auth.krosf.com
-            - name: DOMAIN
+            - name: COOKIE_DOMAIN
               value: krosf.com
             - name: ENABLE_IN_CLUSTER_STORAGE
               value: "true"
