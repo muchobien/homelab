@@ -19,6 +19,7 @@ spec:
         app.kubernetes.io/name: traefik-forward-auth
     spec:
       terminationGracePeriodSeconds: 60
+      serviceAccountName: traefik-forward-auth-serviceaccount
       containers:
         - image: mesosphere/traefik-forward-auth:3.1.0
           imagePullPolicy: IfNotPresent

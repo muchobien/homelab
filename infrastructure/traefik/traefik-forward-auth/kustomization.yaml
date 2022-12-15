@@ -4,6 +4,7 @@ namespace: traefik
 resources:
   - traefik-forward-auth.secret.yaml
   - middleware.yaml
+  - serviceaccount.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml
