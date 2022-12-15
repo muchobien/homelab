@@ -39,7 +39,7 @@ spec:
               memory: "150Mi"
             limits:
               cpu: "50m"
-              memory: "250Mi"
+              memory: "200Mi"
           volumeMounts:
             - mountPath: /opt/adguardhome/work
               name: data-vol
