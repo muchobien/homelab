@@ -36,6 +36,8 @@ spec:
               value: "true"
             - name: INSECURE_COOKIE
               value: "true"
+            - name: SCOPE
+              value: openid,email,profile
             - name: CLUSTER_STORE_NAMESPACE
               value: traefik
             - name: PROVIDER_URI
