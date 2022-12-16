@@ -20,6 +20,7 @@ spec:
     app.kubernetes.io/instance: adguard-home
     app.kubernetes.io/name: adguard-home
   type: LoadBalancer
+  externalTrafficPolicy: Local
 ---
 apiVersion: v1
 kind: Service
@@ -43,6 +44,7 @@ spec:
     app.kubernetes.io/instance: adguard-home
     app.kubernetes.io/name: adguard-home
   type: LoadBalancer
+  externalTrafficPolicy: Local
 ---
 apiVersion: v1
 kind: Service
