@@ -60,6 +60,11 @@ spec:
                 secretKeyRef:
                   name: traefik-forward-auth-secrets
                   key: secret
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: encryption_key
           resources:
             requests:
               cpu: "5m"
