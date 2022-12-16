@@ -74,6 +74,8 @@ spec:
         entryPoints:
           - "websecure"
         matchRule: "Host(`traefik.krosf.com`)"
+        middlewares:
+          - name: traefik-dashboard-auth
 
     resources:
       requests:
