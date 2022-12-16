@@ -75,7 +75,7 @@ spec:
           - "websecure"
         matchRule: "Host(`traefik.krosf.com`)"
         middlewares:
-          - name: traefik-dashboard-auth
+          - name: traefik-forward-auth
 
     resources:
       requests:
