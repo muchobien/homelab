@@ -43,6 +43,11 @@ spec:
               value: openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
             - name: CLUSTER_STORE_NAMESPACE
               value: traefik
+            - name: WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: whitelist
             - name: PROVIDER_URI
               value: https://accounts.google.com
             - name: CLIENT_ID

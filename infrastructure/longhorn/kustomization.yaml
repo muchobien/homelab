@@ -10,3 +10,27 @@ patches:
       kind: ConfigMap
       name: longhorn-storageclass
     path: storageclass.patch.yaml
+  - target:
+      kind: Deployment
+      name: longhorn-driver-deployer
+    patch: |
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: CSI_ATTACHER_REPLICA_COUNT
+          value: "1"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: CSI_PROVISIONER_REPLICA_COUNT
+          value: "1"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: CSI_RESIZER_REPLICA_COUNT
+          value: "1"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: CSI_SNAPSHOTTER_REPLICA_COUNT
+          value: "1"
