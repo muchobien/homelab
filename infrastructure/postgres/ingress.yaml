@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres
+  name: postgres-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`postgres.krosf.com`)
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: traefik
+      services:
+        - kind: Service
+          name: postgres-operator-ui
+          port: 80

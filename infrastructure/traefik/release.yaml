@@ -68,6 +68,19 @@ spec:
               sans:
                 - $(WILDCARD_DOMAIN)
 
+      postgres:
+        port: 5432
+        expose: true
+        exposedPort: 5432
+        protocol: TCP
+        tls:
+          enabled: true
+          certResolver: letsencrypt
+          domains:
+            - main: $(WILDCARD_DOMAIN)
+              sans:
+                - $(WILDCARD_DOMAIN)
+
     ingressRoute:
       dashboard:
         enabled: true

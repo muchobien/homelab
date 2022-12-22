@@ -18,6 +18,10 @@ spec:
       port: 443
       protocol: TCP
       targetPort: websecure
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: postgres
   selector:
     app.kubernetes.io/instance: traefik-traefik
     app.kubernetes.io/name: traefik
@@ -44,6 +48,10 @@ spec:
       port: 443
       protocol: TCP
       targetPort: websecure
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: postgres
   selector:
     app.kubernetes.io/instance: traefik-traefik
     app.kubernetes.io/name: traefik
