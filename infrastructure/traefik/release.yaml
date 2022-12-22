@@ -26,6 +26,10 @@ spec:
     experimental:
       v3:
         enabled: true
+    logs:
+      general:
+        level: DEBUG
+        format: json
     providers:
       kubernetesCRD:
         enabled: true
