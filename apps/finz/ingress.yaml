@@ -12,8 +12,7 @@ spec:
     - kind: Rule
       match: HostSNI(`finz-db.krosf.com`)
       services:
-        - kind: Service
-          name: acid-finz
+        - name: acid-finz
           port: 5432
   tls:
     certResolver: letsencrypt
