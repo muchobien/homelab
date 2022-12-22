@@ -15,3 +15,7 @@ spec:
           port: 5432
   tls:
     certResolver: letsencrypt
+    domains:
+      - main: "*.krosf.com"
+        sans:
+          - "*.krosf.com"
