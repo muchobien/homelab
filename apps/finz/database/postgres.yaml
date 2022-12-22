@@ -25,3 +25,7 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
+
+  proxy:
+    pgBouncer:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.17-5
