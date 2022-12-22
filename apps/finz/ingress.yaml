@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  labels:
+    app.kubernetes.io/name: finz
+    app.kubernetes.io/instance: finz
+  name: finz-db-ingress
+spec:
+  entryPoints:
+    - postgres
+  routes:
+    - kind: Rule
+      match: HostSNI(`finz-db.krosf.com`)
+      services:
+        - kind: Service
+          name: acid-finz
+          port: 5432
+  tls:
+    certResolver: letsencrypt
