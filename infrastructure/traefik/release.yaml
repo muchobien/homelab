@@ -19,6 +19,13 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    image:
+      name: traefik
+      tag: v3.0
+      pullPolicy: IfNotPresent
+    experimental:
+      v3:
+        enabled: true
     providers:
       kubernetesCRD:
         enabled: true
