@@ -1,0 +1,5 @@
+namespace: finz
+
+resources:
+  - namespace.yaml
+  - database.yaml

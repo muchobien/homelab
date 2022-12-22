@@ -1,0 +1,25 @@
+kind: "postgresql"
+apiVersion: "acid.zalan.do/v1"
+metadata:
+  name: "acid-finz"
+  labels:
+    team: acid
+
+spec:
+  teamId: "acid"
+  postgresql:
+    version: "14"
+  numberOfInstances: 1
+  volume:
+    size: "10Gi"
+  users:
+    finz: []
+  databases:
+    finz: finz
+  resources:
+    requests:
+      cpu: 10m
+      memory: 10Mi
+    limits:
+      cpu: 250m
+      memory: 250Mi
