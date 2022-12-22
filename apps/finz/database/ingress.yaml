@@ -11,7 +11,7 @@ spec:
   routes:
     - match: HostSNI(`finz-db.krosf.com`)
       services:
-        - name: finz-pgbouncer
+        - name: finz-replicas
           port: 5432
   tls:
     certResolver: letsencrypt
