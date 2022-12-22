@@ -30,8 +30,6 @@ spec:
       general:
         level: DEBUG
         format: json
-    additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
     providers:
       kubernetesCRD:
         enabled: true

@@ -7,4 +7,3 @@ resources:
   - traefik
   - adguardhome
   - monitoring
-  - postgres
