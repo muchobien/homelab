@@ -9,8 +9,7 @@ spec:
   entryPoints:
     - postgres
   routes:
-    - kind: Rule
-      match: HostSNI(`finz-db.krosf.com`)
+    - match: HostSNI(`finz-db.krosf.com`)
       services:
         - name: acid-finz
           port: 5432
